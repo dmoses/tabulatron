@@ -15,12 +15,12 @@ String buttonsig;
 // It should only have 1 question on it
 // That one question should be a dropdown box with only 4 values on it
 // Example: https://docs.google.com/spreadsheet/viewform?formkey=dHdaS1NkdEtHY2Y5YkNjaDVfNGFpSkE6MQ#gid=0
-String formkey = "dHdaS1NkdEtHY2Y5YkNjaDVfNGFpSkE6MQ"; //the public 'key' for the Google document form (found in url of view mode)
-String revformkey = "0AicMfKa7wo4FdHdaS1NkdEtHY2Y5YkNjaDVfNGFpSkE"; //the private key for the Google document form (found in the url of edit mode)
+String formkey = "your-public-key-goes-here"; //the public 'key' for the Google document form (found in url of view mode)
+String revformkey = "your-private-key-goes-here"; //the private key for the Google document form (found in the url of edit mode)
 String btn0 = "Reference"; // the text of the first option in the dropdown box
 String btn1 = "Technical"; // the text of the second option in the dropdown box
 String btn2 = "Directional"; // the text of the third option in the dropdown box
-String btn3 = "Referral"; // the text of the fourth option in the dropdown box
+String btn3 = "Special"; // the text of the fourth option in the dropdown box
 char bsig;
 
 //Clicking on the 'View Form' button will open up the 'edit' mode in a browser
@@ -95,20 +95,25 @@ void clearboxes(){
 //Does the actual sending to Google
 //Will produce loads of errors in the console window
 //Couldn't really fix these.  (Exceptions couldn't be caught)
+//Google spreadsheet has a new method for submitting form and that is reflected in the way the url is composed.
 void tally(int btn){
   
   switch(btn){
     case 0:
-      loadXML("https://docs.google.com/spreadsheet/formResponse?formkey="+formkey+"&amp;ifq&entry.1.single="+btn0);
+      //loadXML("https://docs.google.com/spreadsheet/formResponse?formkey="+formkey+"&amp;ifq&entry.1.single="+btn0);
+      loadXML("https://docs.google.com/forms/d/"+formkey+"/viewform?entry.1313697263="+btn0);
       break;
     case 1:
-      loadXML("https://docs.google.com/spreadsheet/formResponse?formkey="+formkey+"&amp;ifq&entry.1.single="+btn1);
+      //loadXML("https://docs.google.com/spreadsheet/formResponse?formkey="+formkey+"&amp;ifq&entry.1.single="+btn1);
+      loadXML("https://docs.google.com/forms/d/"+formkey+"/viewform?entry.1313697263="+btn1);
       break;
     case 2:
-      loadXML("https://docs.google.com/spreadsheet/formResponse?formkey="+formkey+"&amp;ifq&entry.1.single="+btn2);
+      //loadXML("https://docs.google.com/spreadsheet/formResponse?formkey="+formkey+"&amp;ifq&entry.1.single="+btn2);
+      loadXML("https://docs.google.com/forms/d/"+formkey+"/viewform?entry.1313697263="+btn2);
       break;
     case 3:
-      loadXML("https://docs.google.com/spreadsheet/formResponse?formkey="+formkey+"&amp;ifq&entry.1.single="+btn3);
+      //loadXML("https://docs.google.com/spreadsheet/formResponse?formkey="+formkey+"&amp;ifq&entry.1.single="+btn3);
+      loadXML("https://docs.google.com/forms/d/"+formkey+"/viewform?entry.1313697263="+btn3);
       break;
     default:
     
