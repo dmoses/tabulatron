@@ -5,6 +5,7 @@
 //
 // written by Tim Ribaric (tim@elibtronic.ca)
 // @elibtronic
+// updated by David Anez and Don Moses (dmoses@upei.ca)
 
 import processing.serial.*;
 Serial port;
@@ -15,12 +16,12 @@ String buttonsig;
 // It should only have 1 question on it
 // That one question should be a dropdown box with only 4 values on it
 // Example: https://docs.google.com/spreadsheet/viewform?formkey=dHdaS1NkdEtHY2Y5YkNjaDVfNGFpSkE6MQ#gid=0
-String formkey = "your-public-key-goes-here"; //the public 'key' for the Google document form (found in url of view mode)
-String revformkey = "your-private-key-goes-here"; //the private key for the Google document form (found in the url of edit mode)
-String btn0 = "Reference"; // the text of the first option in the dropdown box
-String btn1 = "Technical"; // the text of the second option in the dropdown box
-String btn2 = "Directional"; // the text of the third option in the dropdown box
-String btn3 = "Special"; // the text of the fourth option in the dropdown box
+String formkey = "your-public-key-goes-here"; // the public 'key' for the Google document form (found in url of view mode) 
+String revformkey = "your-private-key-goes-here"; // the private key for the Google document form (found in the url of edit mode) 
+String btn0 = "Reference"; // the text of the first option in the dropdownbox 
+String btn1 = "Technical"; // the text of the second option in the dropdownbox 
+String btn2 = "Directional"; // the text of the third option in the dropdownbox 
+String btn3 = "Special"; // the text of the fourth option in the dropdownbox 
 char bsig;
 
 //Clicking on the 'View Form' button will open up the 'edit' mode in a browser
@@ -32,14 +33,13 @@ void mouseReleased(){
 
 }
 
-
 //Branding
 void viewform(){
   rect(75,55,225,25);
   rect(75,325,225,25);
   ellipse(350,90,25,25);
   fill(0);
-  text("View Form",150,345);
+  text("Data",150,345);
   text("Tabulatron",150,75);
   fill(255);
 }
@@ -93,27 +93,29 @@ void clearboxes(){
  }
 
 //Does the actual sending to Google
-//Will produce loads of errors in the console window
-//Couldn't really fix these.  (Exceptions couldn't be caught)
-//Google spreadsheet has a new method for submitting form and that is reflected in the way the url is composed.
+//loadStrings clears up the console errors.
+//substitute your_form_field_id with what's in your form. 
+//View the source of the live form to get the for= value of the select element
+// ... should be something like entry.111111111
+
 void tally(int btn){
   
   switch(btn){
     case 0:
       //loadXML("https://docs.google.com/spreadsheet/formResponse?formkey="+formkey+"&amp;ifq&entry.1.single="+btn0);
-      loadXML("https://docs.google.com/forms/d/"+formkey+"/viewform?entry.1313697263="+btn0);
+      loadStrings("https://docs.google.com/forms/d/"+formkey+"/formResponse?entry.your_form_field_id="+btn0);
       break;
     case 1:
       //loadXML("https://docs.google.com/spreadsheet/formResponse?formkey="+formkey+"&amp;ifq&entry.1.single="+btn1);
-      loadXML("https://docs.google.com/forms/d/"+formkey+"/viewform?entry.1313697263="+btn1);
+      loadStrings("https://docs.google.com/forms/d/"+formkey+"/formResponse?entry.your_form_field_id="+btn1);
       break;
     case 2:
       //loadXML("https://docs.google.com/spreadsheet/formResponse?formkey="+formkey+"&amp;ifq&entry.1.single="+btn2);
-      loadXML("https://docs.google.com/forms/d/"+formkey+"/viewform?entry.1313697263="+btn2);
+      loadStrings("https://docs.google.com/forms/d/"+formkey+"/formResponse?entry.your_form_field_id="+btn2);
       break;
     case 3:
       //loadXML("https://docs.google.com/spreadsheet/formResponse?formkey="+formkey+"&amp;ifq&entry.1.single="+btn3);
-      loadXML("https://docs.google.com/forms/d/"+formkey+"/viewform?entry.1313697263="+btn3);
+      loadStrings("https://docs.google.com/forms/d/"+formkey+"/formResponse?entry.your_form_field_id="+btn3);
       break;
     default:
     
@@ -133,7 +135,7 @@ void setup() {
   //At first run you'll have to figure out what COMM port the Arduino is on
   //change the array index to corresponding value 
   println(Serial.list());
-  port = new Serial(this,Serial.list()[2],9600);
+  port = new Serial(this,Serial.list()[0],9600);
  } 
 
 //Listens to Serial port defined above and reads until linefeed
@@ -175,5 +177,3 @@ void draw() {
         }
     }
 }
-
-    
